@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include "students_t.h"
 
 // Function prototypes
 double betacf(double a, double b, double x);
@@ -8,10 +9,6 @@ double t_cdf(double t, int df);
 
 // Continued fraction for the incomplete beta function
 double betacf(double a, double b, double x) {
-    const int MAXIT = 100;
-    const double EPS = 3.0e-7;
-    const double FPMIN = 1.0e-30;
-
     int m, m2;
     double aa, c, d, del, h, qab, qam, qap;
 
@@ -42,7 +39,6 @@ double betacf(double a, double b, double x) {
         h *= del;
         if (fabs(del - 1.0) < EPS) break;
     }
-    if (m > MAXIT) printf("a or b too big, or MAXIT too small in betacf\n");
     return h;
 }
 
