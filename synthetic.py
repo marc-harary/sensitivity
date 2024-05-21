@@ -1,16 +1,16 @@
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import pandas as pd
-from eight_point_lemma import *
 from scipy.stats import multivariate_normal
 from primary_sensitivity import primary_sensitivity as ps
+from utils import *
+
 import matplotlib as mpl
 import seaborn as sns; sns.set_theme()
-
 mpl.rcParams["text.usetex"] = True
 mpl.rcParams["font.family"] = "serif"
-plt.rcParams['xtick.major.pad'] = -1  # Set padding for x-axis tick labels
-plt.rcParams['ytick.major.pad'] = -1  # Set padding for y-axis tick labels
+plt.rcParams['xtick.major.pad'] = -1
+plt.rcParams['ytick.major.pad'] = -1
 plt.rcParams['axes.labelpad'] = 13
 
 def generate_uniform(n):
@@ -31,18 +31,6 @@ def generate_bivariate_dirichlet(n):
 def generate_gmm(n):
     num_components = np.random.randint(1, 5)  # Randomly choose between 1 and 4 components
     gmm = GaussianMixture(n_components=num_components)
-    data, _ = gmm.sample(n_samples=n)
-    return data
-
-def generate_gmm(n):
-    num_components = np.random.randint(1, 5)  # Randomly choose between 1 and 4 components
-    gmm = GaussianMixture(n_components=num_components)
-
-    # Generate some dummy data to fit
-    dummy_data = np.random.normal(0, 1, (5, 2))  # Dummy data for initial fitting
-    gmm.fit(dummy_data)  # Fit the model to the dummy data
-
-    # Now sample from the fitted model
     data, _ = gmm.sample(n_samples=n)
     return data
 
@@ -87,10 +75,6 @@ def main():
             data = generate_bivariate_dirichlet(N)
             prd, brute = test_data(data)
             all_data.append(dict(N=N, model="dirichlet", prd=prd[0], brute=brute[0]))
-
-            # data = generate_gmm(N)
-            # prd, brute = test_data(data)
-            # all_data.append(dict(N=N, model="mixture", prd=prd, brute=brute))
 
             data = generate_bivariate_gaussian_outliers(N)
             prd, brute = test_data(data)

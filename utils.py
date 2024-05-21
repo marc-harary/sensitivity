@@ -10,16 +10,13 @@ def p_value_for_pcc(r, n):
     return p_value
 
 def compute_correlation(data):
-    """Compute the correlation for a given dataset."""
     x_vals, y_vals = zip(*data)
     mean_x, mean_y = np.mean(x_vals), np.mean(y_vals)
     cov = np.mean([(x - mean_x) * (y - mean_y) for x, y in data])
     var_x, var_y = np.var(x_vals), np.var(y_vals)
-    return cov / (
-        np.sqrt(var_x * var_y)# + 1e-10
-    )  # Small value to avoid division by zero
+    return cov / (np.sqrt(var_x * var_y))
 
-def brute_force_search(data, x_range, y_range, grid_size=10):
+def brute_force_search(data, bounds, grid_size=10):
     """Brute force search to compute the maximal change in correlation."""
     og_r = compute_correlation(data)
     og_p = p_value_for_pcc(og_r, len(data))
@@ -27,8 +24,8 @@ def brute_force_search(data, x_range, y_range, grid_size=10):
     max_p_diff = -np.inf
     max_r_diff = -np.inf
 
-    x_grid = np.linspace(x_range[0], x_range[1], grid_size)
-    y_grid = np.linspace(y_range[0], y_range[1], grid_size)
+    x_grid = np.linspace(bounds[0][0], bounds[1][0], grid_size)
+    y_grid = np.linspace(bounds[0][1], bounds[1][1], grid_size)
 
     for x in x_grid:
         for y in y_grid:
