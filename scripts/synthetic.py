@@ -50,8 +50,9 @@ def test_data(data, x_range=None, y_range=None):
         x_range = (data[0, :].min(), data[0, :].max())
         y_range = (data[1, :].min(), data[1, :].max())
     data = data.tolist()
-    prd = ps(data, ((x_range[0], y_range[0]), (x_range[1], y_range[1])))
-    brute = brute_force_search(data, x_range, y_range)
+    bounds = ((x_range[0], y_range[0]), (x_range[1], y_range[1]))
+    prd = ps(data, bounds)
+    brute = brute_force_search(data, bounds)
     return prd, brute
 
 
