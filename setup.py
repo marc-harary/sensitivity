@@ -1,24 +1,16 @@
-from setuptools import setup, Extension
+from distutils.core import setup, Extension
 from Cython.Build import cythonize
 
 ext_modules = [
     Extension(
-        name="sensitivity.primary_sensitivity",
-        sources=["sensitivity/primary_sensitivity.pyx", "sensitivity/primary_sensitivity_impl.c"],
-        language="c",
+        name="primary_sensitivity",
+        sources=["sensitivity/sensitivity.pyx", "sensitivity/students_t.c", "sensitivity/primary_sensitivity_impl.c"],
+        include_dirs=["."],  # This ensures the headers are found in the current directory
     )
 ]
 
 setup(
-    name="sensitivity",
-    version="0.1",
-    description="A package to compute the primary sensitivity of the PCC to new data points",
-    author="Marc Harary",
-    author_email="marc@ds.dfci.harvard.edu",
-    license="MIT",
-    packages=["sensitivity"],
+    name="primary_sensitivity",
     ext_modules=cythonize(ext_modules),
-    install_requires=[
-        "Cython",
-    ],
 )
+
