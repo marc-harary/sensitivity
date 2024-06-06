@@ -5,9 +5,9 @@ from utils import *
 
 
 def main():
-    tickers = ['SPY', 'XLF']
-    start_date = '2008-09-22'
-    end_date = '2008-09-29'
+    tickers = ["SPY", "XLF"]
+    start_date = "2008-09-22"
+    end_date = "2008-09-29"
 
     df = yf.download(tickers, start=start_date, end=end_date)
     spy = df["Close"]["SPY"]
@@ -21,7 +21,7 @@ def main():
     sens_r = ps(data, bounds)
     brute = brute_force_search(data, bounds, grid_size=100)
 
-    print(r, p)
+    print("r_n and p_n:", r, p)
     print("Predicted:", sens_r)
     print("Brute-force:", brute)
 
