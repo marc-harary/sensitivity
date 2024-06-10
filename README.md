@@ -23,14 +23,13 @@ import numpy as np
 
 x = np.random.normal(size=100)
 y = 2 * x + np.random.normal(size=100)
-
 data = list(zip(x, y))
 
-# Define bounds for sensitivity analysis
+# define bounds for sensitivity analysis
 bounds = [(x.min(), y.min()), (x.max(), y.max())]
 
-# Compute primary sensitivity (using the 'ps' function from your software)
-sens_r = ps(data, bounds)
+# compute primary sensitivity
+sens_r, sens_p = ps(data, bounds)
 ```
 
 ## Experiments
