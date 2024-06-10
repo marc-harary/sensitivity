@@ -4,6 +4,8 @@
 
 [**Efficient algorithms for the sensitivities of the Pearson correlation coefficient and its statistical significance to online data**](https://arxiv.org/abs/2405.14686)
 
+This repository contains code to compute the primary sensitivity of the Pearson correlation coefficient (PCC) and its associated p-value within a rectangular feasible region.
+
 ## Requirements
 To install the relevant dependencies, run
 ```setup
@@ -14,9 +16,24 @@ To build the main module, run
 python setup.py build_ext --inplace
 ```
 
-## Results
+## Usage
+```python
+from primary_sensitivity import primary_sensitivity as ps
+import numpy as np
 
-Experiment scripts are located in `experiments`.
+x = np.random.normal(size=100)
+y = 2 * x + np.random.normal(size=100)
+
+data = list(zip(x, y))
+
+# Define bounds for sensitivity analysis
+bounds = [(x.min(), y.min()), (x.max(), y.max())]
+
+# Compute primary sensitivity (using the 'ps' function from your software)
+sens_r = ps(data, bounds)
+```
+
+## Experiments
 
 ### Synthetic Data 
 To validate our algorithm on synthetic data randomly sampled from several distributions, run
