@@ -3,15 +3,7 @@ from scipy import stats
 
 
 def compute_correlation(data):
-    """
-    Compute the Pearson correlation coefficient for the provided data.
-
-    Parameters:
-    data (list of tuples): List of ordered pairs representing data points.
-
-    Returns:
-    r (float): Pearson correlation coefficient.
-    """
+    """Compute the Pearson correlation coefficient for the provided data."""
     if len(data) < 2:
         raise ValueError("Data must contain at least two pairs")
 
@@ -28,16 +20,7 @@ def compute_correlation(data):
 
 
 def p_value_for_pcc(r, n):
-    """
-    Calculate the p-value for a given Pearson correlation coefficient.
-
-    Parameters:
-    r (float): Pearson correlation coefficient.
-    n (int): Number of samples.
-
-    Returns:
-    p_value (float): p-value for the correlation coefficient.
-    """
+    """Calculate the p-value for a given Pearson correlation coefficient."""
     df = n - 2  # degrees of freedom
     if df <= 0:
         raise ValueError("Number of samples must be greater than 2")
@@ -62,22 +45,19 @@ def brute_force_search(data, bounds, grid_size=10):
     x_grid = np.linspace(x_range[0], x_range[1], grid_size)
     y_grid = np.linspace(y_range[0], y_range[1], grid_size)
 
-    for point_to_remove in data:
-        # Manually remove the point
-        data_removed = [point for point in data if point != point_to_remove]
-        for x in x_grid:
-            for y in y_grid:
-                # Append the grid point
-                new_data = data_removed + [(x, y)]
-                new_r = compute_correlation(new_data)
-                new_p_value = p_value_for_pcc(new_r, len(new_data))
+    for x in x_grid:
+        for y in y_grid:
+            # Append the grid point
+            new_data = data + [(x, y)]
+            new_r = compute_correlation(new_data)
+            new_p_value = p_value_for_pcc(new_r, len(new_data))
 
-                # Compute the differences
-                r_diff = abs(new_r - original_r)
-                p_value_diff = abs(new_p_value - original_p_value)
+            # Compute the differences
+            r_diff = abs(new_r - original_r)
+            p_value_diff = abs(new_p_value - original_p_value)
 
-                # Update max differences
-                max_r_diff = max(max_r_diff, r_diff)
-                max_p_value_diff = max(max_p_value_diff, p_value_diff)
+            # Update max differences
+            max_r_diff = max(max_r_diff, r_diff)
+            max_p_value_diff = max(max_p_value_diff, p_value_diff)
 
     return max_r_diff, max_p_value_diff
