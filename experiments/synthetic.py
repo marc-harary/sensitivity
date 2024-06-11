@@ -22,7 +22,7 @@ def generate_uniform(n):
 
 def generate_bivariate_gaussian(n):
     mean = [0, 0]
-    # Ensure a positive definite covariance matrix
+    # ensure a positive definite covariance matrix
     A = np.random.rand(2, 2)
     covariance = np.dot(
         A, A.transpose()
@@ -31,15 +31,15 @@ def generate_bivariate_gaussian(n):
 
 
 def generate_bivariate_dirichlet(n):
-    alpha = np.random.rand(3) * 10  # Random parameters greater than 0
+    alpha = np.random.rand(3) * 10  # random parameters greater than 0
     samples = np.random.dirichlet(alpha, size=n)
-    return samples[:, :2]  # Ignore the third variable
+    return samples[:, :2]  # ignore the third variable
 
 
 def generate_gmm(n):
     num_components = np.random.randint(
         1, 5
-    )  # Randomly choose between 1 and 4 components
+    )  # randomly choose between 1 and 4 components
     gmm = GaussianMixture(n_components=num_components)
     data, _ = gmm.sample(n_samples=n)
     return data
@@ -49,7 +49,7 @@ def generate_bivariate_gaussian_outliers(n):
     mean = [0, 0]
     covariance = [[1, 0.5], [0.5, 1]]
     data = np.random.multivariate_normal(mean, covariance, size=n)
-    # Add outliers
+    # add outliers
     num_outliers = int(0.1 * n)  # 10% as outliers
     outliers = np.random.uniform(-30, 30, (num_outliers, 2))
     data[:num_outliers] = outliers
@@ -108,19 +108,18 @@ def main():
         axs[i].set_xlim(0, 2)
         axs[i].set_ylim(0, 2)
         if i < 4:
-            axs[i].set_title(model.capitalize())  # , fontsize=15)
+            axs[i].set_title(model.capitalize())
         if i % 4 == 3:
             axs[i].yaxis.set_label_position("right")
-            axs[i].set_ylabel("$N=$" + str(N), rotation=-90)  # , fontsize=15)
+            axs[i].set_ylabel("$N=$" + str(N), rotation=-90)
 
-    fig.text(0.5, 0.02, s="Brute-force", ha="center", va="center")  # , fontsize=15)
+    fig.text(0.5, 0.02, s="Brute-force", ha="center", va="center")
     fig.text(
         0.02, 0.5, s="Predicted", ha="center", va="center", rotation=90
-    )  # , fontsize=15, rotation=-90)
+    )
 
     plt.tight_layout(h_pad=0.7, w_pad=0.6, pad=1.15)
     plt.savefig("synthetic_plot.pdf")
-    # plt.show()
 
 
 if __name__ == "__main__":
